@@ -1,0 +1,108 @@
+<?php
+
+namespace {{ namespace }};
+
+use {{ namespacedModel }};
+use {{ rootNamespace }}Http\Controllers\Controller;
+use Illuminate\Http\Request;
+
+/**
+ * Class {{ class }}
+ * @package {{ namespace }}
+ * @author Andrew <andrew@quasars.com>
+ */
+class {{ class }} extends Controller
+{
+    static string $RESOURCE_MODEL = {{ model }}::class;
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Contracts\View\Factory
+     */
+    public function index()
+    {
+        return view('{{ modelVariable }}.index');
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \{{ namespacedModel }}  ${{ modelVariable }}
+     * @return \Illuminate\Contracts\View\Factory
+     */
+    public function show({{ model }} ${{ modelVariable }})
+    {
+        return view('{{ modelVariable }}.view')->with(compact('{{ modelVariable }}'));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Contracts\View\Factory
+     */
+    public function create()
+    {
+        return view('{{ modelVariable }}.create');
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function store(Request $request)
+    {
+        {{ model }}::create($request->all());
+        return redirect(route('home'))->with("alert", ['type' => 'success', 'msg' => '{{ model }} Created']);
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \{{ namespacedModel }}  ${{ modelVariable }}
+     * @return \Illuminate\Contracts\View\Factory
+     */
+    public function edit({{ model }} ${{ modelVariable }})
+    {
+        return view('{{ modelVariable }}.edit')->with(compact('{{ modelVariable }}'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \{{ namespacedModel }}  ${{ modelVariable }}
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function update(Request $request, {{ model }} ${{ modelVariable }})
+    {
+        ${{ modelVariable }}->update($request->all());
+        return redirect(route('home'))->with("alert", ['type' => 'success', 'msg' => '{{ model }} Updated']);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \{{ namespacedModel }}  ${{ modelVariable }}
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function destroy({{ model }} ${{ modelVariable }})
+    {
+        ${{ modelVariable }}->delete();
+        return redirect()->back()->with("alert", ['type' => 'success', 'msg' => '{{ model }} Deleted']);
+    }
+
+    /**
+     * Restore the specified soft deleted model.
+     *
+     * @param int $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function restore(int $id)
+    {
+        {{ model }}::withTrashed()->findOrFail($id)->restore();
+        return redirect()->back()->with("alert", ['type' => 'success', 'msg' => '{{ model }} Restored']);
+    }
+}

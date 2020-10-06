@@ -1,0 +1,131 @@
+@tailwind base;
+
+@tailwind components;
+
+@tailwind utilities;
+
+.btn {
+  @apply font-bold py-2 px-4 rounded;
+  cursor: pointer;
+}
+
+@each $color in ('gray', 'red', 'orange', 'yellow', 'green', 'teal', 'blue', 'indigo', 'purple', 'pink') {
+  .btn-#{$color} {
+    @apply bg-#{$color}-500 text-white;
+  }
+  .btn-#{$color}:hover {
+    @apply bg-#{$color}-600;
+  }
+}
+.form-control {
+  @apply bg-white border border-gray-300 rounded-lg py-2 px-4 block w-full appearance-none leading-normal;
+  &:focus {
+    @apply outline-none border-blue-400;
+    border-width: 2px;
+  }
+}
+.form-control.form-inline {
+  border-radius: 0;
+}
+
+/* FLOATING LABELS */
+.form-label-group {
+  position: relative;
+  &:not(.m-0) {
+    margin-bottom: 1rem;
+  }
+}
+
+.form-label-group > input,
+.form-label-group > textarea,
+.form-label-group > select,
+.form-label-group > label {
+  height: 3.125rem;
+  padding: .75rem;
+
+  &:not(.form-inline){
+    @media (min-width: 1024px) {
+      width: 50%;
+      display: inline-block;
+      margin-right: 0.5rem;
+    }
+  }
+}
+@media (min-width: 1024px) {
+  .form-label-group {
+    display: flex;
+  }
+}
+.form-label-group > label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 100%;
+  color: #777;
+  pointer-events: none;
+  cursor: text; /* Match the input under the label */
+  border: 1px solid transparent;
+  border-radius: .25rem;
+  transition: all .1s ease-in-out;
+}
+
+.form-label-group input::placeholder,
+.form-label-group select[data-chosen=''],
+.form-label-group textarea::placeholder{
+  color: transparent;
+}
+
+.form-label-group select[data-chosen=''] > option {
+  color: black;
+}
+
+.form-label-group input:not(:placeholder-shown),
+.form-label-group select:not([data-chosen='']),
+.form-label-group textarea:not(:placeholder-shown) {
+  padding-top: 1.25rem;
+  padding-bottom: .25rem;
+}
+
+.form-label-group input:not(:placeholder-shown) ~ label,
+.form-label-group select:not([data-chosen='']) ~ label,
+.form-label-group textarea:not(:placeholder-shown) ~ label {
+  padding-top: .25rem;
+  padding-bottom: .25rem;
+  font-size: 12px;
+  color: #777;
+}
+
+.invalid-feedback,
+.valid-feedback {
+  display: block;
+}
+
+.invalid-feedback {
+  @apply text-red-600 bg-red-200;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 1;
+
+  height: 24px;
+  margin-top: 0.25rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  /* Large (lg) */
+  @media (min-width: 1024px) {
+    height: 50px;
+    display: inline-flex;
+    margin-top: 0;
+
+    margin-left: 0.5rem;
+    width: 50%;
+  }
+}
+
+.is-invalid {
+  @apply border-red-500;
+  border-width: 2px;
+  border-style: solid;
+}
